@@ -2,19 +2,9 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_instance" "example" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name = var.key_name
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
-  tags = {
-    Name = "${var.environment}-server"
-  }
-}
-
-resource "aws_security_group" "allow_ssh" {
-  name        = "${var.environment}_sg"
+resource "aws_security_group" "my_sg" {
+  name        = "my-security-group"
   description = "Allow SSH inbound traffic"
   vpc_id      = var.vpc_id
 
@@ -22,7 +12,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["256.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -31,4 +21,21 @@ resource "aws_security_group" "allow_ssh" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "${var.environment}-sg"
+  }
 }
+
+resource "aws_instance" "webserver" {
+  ami                    = var.ami_id
+  instance_type          = "t2.micro"
+  key_name               = var.key_name
+  subnet_id              = var.subnet_id
+  vpc_security_group_ids = [aws_security_group.my_sg.id]
+
+  tags = {
+    Name = "${var.environment}-server"
+  }
+}
+
