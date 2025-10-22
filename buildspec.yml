@@ -27,18 +27,18 @@ phases:
 
   build:
     commands:
-      - echo "Terraform action selected: ${ACTION}"
-      - |
+      - echo "Terraform action selected:${ACTION}"
+      - >
         if [ "${ACTION}" = "apply" ]; then
-          echo "Running terraform plan and apply..."
-          terraform plan -input=false -out=tfplan
-          terraform apply -auto-approve tfplan
+          echo "Running terraform plan and apply...";
+          terraform plan -input=false -out=tfplan;
+          terraform apply -auto-approve tfplan;
         elif [ "${ACTION}" = "destroy" ]; then
-          echo "Running terraform destroy..."
-          terraform destroy -auto-approve
+          echo "Running terraform destroy...";
+          terraform destroy -auto-approve;
         else
-          echo "❌ Invalid ACTION flag. Must be 'apply' or 'destroy'."
-          exit 1
+          echo "❌ Invalid ACTION flag. Must be 'apply' or 'destroy'.";
+          exit 1;
         fi
 
   post_build:
