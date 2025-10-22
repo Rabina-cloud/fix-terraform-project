@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     TF_VERSION: "1.9.5"
-    TF_WORKING_DIR: "terraform"
+    TF_WORKING_DIR: "terraform-source"
     AWS_REGION: "ca-central-1"
     ACTION: "apply" # Change to "destroy" to tear down infrastructure
 
@@ -13,8 +13,9 @@ phases:
       python: 3.9
     commands:
       - echo "Installing Terraform v${TF_VERSION}..."
+      - rm -rf terraform terraform.zip
       - curl -o terraform.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-      - unzip terraform.zip
+      - unzip -o terraform.zip
       - mv terraform /usr/local/bin/
       - terraform -version
       - echo "Terraform installation complete."
