@@ -34,5 +34,5 @@ variable "subnet_id" {
 variable "vpc_id" {
   type        = string
   description = "VPC ID to launch resources into"
-  default =  "vpc-06089a82ab38e214d"
+  default =  "vpc-003b9252088292507"
 }
