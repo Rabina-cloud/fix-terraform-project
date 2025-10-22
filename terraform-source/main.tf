@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 
-resource "aws_security_group" "my_sg" {
-  name        = "my-security-group"
+resource "aws_security_group" "my_securitygp" {
+  name        = "my-security-group-terraform"
   description = "Allow SSH inbound traffic"
   vpc_id      = var.vpc_id
 
