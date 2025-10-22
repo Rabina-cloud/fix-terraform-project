@@ -28,7 +28,7 @@ variable "environment" {
 variable "subnet_id" {
   description = "The subnet ID where the EC2 instance will be deployed"
   type        = string
-  default = "subnet-025ae41f988b4c3ce"
+  default = "subnet-0a226d4c8936066f1"
 }
 
 variable "vpc_id" {
