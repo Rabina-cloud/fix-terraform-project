@@ -28,26 +28,24 @@ phases:
 
   build:
     commands:
-      - echo "Terraform action selected: ${ACTION}"
-      - cd ${TF_WORKING_DIR}
-      - |
+      - echo "Terraform action selected:${ACTION}"
+      - >
         if [ "${ACTION}" = "apply" ]; then
-          echo "Running terraform plan and apply..."
-          terraform plan -input=false -out=tfplan || { echo "Terraform plan failed"; exit 1; }
-          terraform apply -auto-approve tfplan || { echo "Terraform apply failed"; exit 1; }
+          echo "Running terraform plan and apply...";
+          terraform plan -input=false -out=tfplan;
+          terraform apply -auto-approve tfplan;
         elif [ "${ACTION}" = "destroy" ]; then
-          echo "Running terraform destroy..."
-          terraform destroy -auto-approve || { echo "Terraform destroy failed"; exit 1; }
+          echo "Running terraform destroy...";
+          terraform destroy -auto-approve;
         else
-          echo "❌ Invalid ACTION flag. Must be 'apply' or 'destroy'."
-          exit 1
+          echo "❌ Invalid ACTION flag. Must be 'apply' or 'destroy'.";
+          exit 1;
         fi
 
   post_build:
     commands:
-      - cd ${TF_WORKING_DIR}
       - echo "Terraform ${ACTION} completed successfully."
-      - terraform output || true
+      - terraform output || true # Outputs only if resources exist
 
 artifacts:
   files:
